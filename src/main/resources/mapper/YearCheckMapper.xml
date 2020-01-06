@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhangjiaming.dao.YearCheckDaoMapper">
+
+	<select id="selectAll" resultType="com.zhangjiaming.vo.YearCheckVO">
+		SELECT * from yearcheck
+		<where>
+			<if test="id != null and id > 0">
+				and id like '%${id}%'
+			</if>
+			<if test="keyword != null and keyword != ''">
+				and keyword like '%${keyword}%'
+			</if>
+			<if test="message != null and message != ''">
+				and message like '%${message}%'
+			</if>
+			<if test="company != null and company != ''">
+				and company like '%${company}%'
+			</if>
+			<if test="thing != null and thing != ''">
+				and thing like '%${thing}%'
+			</if>
+			<if test="address != null and address != ''">
+				and address like '%${address}%'
+			</if>
+			<if test="startRegistMoney != null and startRegistMoney > 0">
+				and registMoney &gt;= #{startRegistMoney}
+			</if>
+			<if test="endRegistMoney != null and endRegistMoney > 0">
+				and registMoney &lt;= #{endRegistMoney}
+			</if>
+			<if test="startCreate_time != null and startCreate_time != ''">
+				and create_time &gt;= #{startCreate_time}
+			</if>
+			<if test="endCreate_time != null and endCreate_time != ''">
+				and create_time &lt;= #{endCreate_time}
+			</if>
+			<if test="startYearcheck_date != null and startYearcheck_date != ''">
+				and yearcheck_date &gt;= #{startYearcheck_date}
+			</if>
+			<if test="endYearcheck_date != null and endYearcheck_date != ''">
+				and yearcheck_date &lt;= #{endYearcheck_date}
+			</if>
+			<if test="yearcheck_status != null and yearcheck_status != ''">
+				and yearcheck_status = #{yearcheck_status}
+			</if>
+		</where>
+	</select>
+	
+	<select id="toUpdate" resultType="YearCheck">
+		select * from yearcheck
+		where id = #{id}
+	</select>
+	
+	<update id="doCheck">
+		update yearcheck(id,keyword,message,company,thing,address,registMoney,create_time,yearcheck_date,yearcheck_status,ps)
+		value(#{id},#{keyword},#{message},#{company},#{thing},#{address},#{registMoney},#{create_time},#{yearcheck_date},#{yearcheck_status},#{ps})
+	</update>
+</mapper>
